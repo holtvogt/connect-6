@@ -1,6 +1,7 @@
 package edu.kit.informatik.game;
 
 /**
+ * This class implements the current game state.
  * 
  * @author Björn Holtvogt
  *
@@ -21,5 +22,4 @@ public enum GameState {
      * Game ended with a win - state.
      */
     WON;
-
 }

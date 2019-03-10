@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
+ * This class represents the players in the game.
  * 
  * @author Björn Holtvogt
  *

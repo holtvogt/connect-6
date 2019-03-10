@@ -1,7 +1,7 @@
-package edu.kit.informatik;
+package edu.kit.informatik.exceptions;
 
 /**
- * 
+ * This exception is to be thrown when the user enters invalid input to the command line.
  * @author Björn Holtvogt
  *
  */

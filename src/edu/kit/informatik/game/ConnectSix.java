@@ -1,9 +1,9 @@
 package edu.kit.informatik.game;
 
-import edu.kit.informatik.Main;
-import edu.kit.informatik.InvalidInputException;
+import edu.kit.informatik.exceptions.InvalidInputException;
 
 /**
+ * This class processes all game interactions from the user(s) and responds via command line. 
  * 
  * @author Björn Holtvogt
  *
@@ -137,31 +137,23 @@ public class ConnectSix {
                 createBoard();
                 argumentsCorrect = true;
             } else {
-                Main.textOutput("Error, invalid amount of command line arguments or unknown game mode entered.");
+            	output("Error, invalid amount of command line arguments or unknown game mode entered.");
             }
         } catch (NumberFormatException numberFormatException) {
-            Main.textOutput("Error, invalid command line arguments.");
+        	output("Error, invalid command line arguments.");
         }
         return argumentsCorrect;
     }
 
     /**
-     * Creates a new and empty game board.
-     */
-    private void createBoard() {
-
-        board.setBoard(boardLength);
-    }
-
-    /**
-     * Processed outputs of the program will be send to the main class, the only user interface.
+     * Communication with the user(s) through command line.
      * 
      * @param text
      *            Current answer of a command method.
      */
-    public void prepareTextOutput(final String text) {
+    public void output(final String text) {
 
-        Main.textOutput(text);
+        System.out.println(text);
     }
 
     /**
@@ -249,5 +241,13 @@ public class ConnectSix {
         setCurrentPlayer(Player.P1);
         setCurrentGameState(GameState.RUNNING);
         return "OK";
+    }
+    
+    /**
+     * Creates a new and empty game board.
+     */
+    private void createBoard() {
+
+        board.setBoard(boardLength);
     }
 }

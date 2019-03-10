@@ -1,11 +1,13 @@
 package edu.kit.informatik;
 
+import edu.kit.informatik.exceptions.InvalidInputException;
 import edu.kit.informatik.game.ConnectSix;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * The main class is the entry point of the connect 6 game application.
  *
  * @author Björn Holtvogt
  *
@@ -45,24 +47,13 @@ public final class Main {
                 try {
                     command = Command.matchingCommand(IN.readLine(), connectSix);
                 } catch (InvalidInputException invalidInputException) {
-                    System.out.println("Error, " + invalidInputException.getMessage());
+                	connectSix.output("Error, " + invalidInputException.getMessage());
                 } catch (NumberFormatException numberFormatException) {
-                    System.out.println("Error, input isn't equal to an integer.");
+                	connectSix.output("Error, input isn't equal to an integer.");
                 } catch (IOException ioException) {
 					throw new RuntimeException(ioException);
 				}
             } while (command == null || command.isRunning());
         }
-    }
-
-    /**
-     * Communication of the program with the user/s.
-     *
-     * @param text
-     *            Answer of an command input to the user/s.
-     */
-    public static void textOutput(String text) {
-
-        System.out.println(text);
     }
 }

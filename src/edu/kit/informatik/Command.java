@@ -1,5 +1,6 @@
 package edu.kit.informatik;
 
+import edu.kit.informatik.exceptions.InvalidInputException;
 import edu.kit.informatik.game.ConnectSix;
 import edu.kit.informatik.game.GameState;
 import java.util.regex.Pattern;
@@ -7,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.MatchResult;
 
 /**
+ * This class implements all necessary commands for game usage.
  * 
  * @author Björn Holtvogt
  *
@@ -32,7 +34,7 @@ public enum Command {
                 int firstColumn = Integer.parseInt(matcher.group(2));
                 int secondRow = Integer.parseInt(matcher.group(3));
                 int secondColumn = Integer.parseInt(matcher.group(4));
-                connectSix.prepareTextOutput(
+                connectSix.output(
                         connectSix.placeToken(firstRow, firstColumn, secondRow, secondColumn, connectSix));
             }
         }
@@ -50,7 +52,7 @@ public enum Command {
 
             boolean horizontal = true;
             int row = Integer.parseInt(matcher.group(1));
-            connectSix.prepareTextOutput(connectSix.printBoardLine(row, horizontal));
+            connectSix.output(connectSix.printBoardLine(row, horizontal));
         }
     },
 
@@ -66,7 +68,7 @@ public enum Command {
 
             boolean horizontal = false;
             int column = Integer.parseInt(matcher.group(1));
-            connectSix.prepareTextOutput(connectSix.printBoardLine(column, horizontal));
+            connectSix.output(connectSix.printBoardLine(column, horizontal));
         }
     },
 
@@ -79,7 +81,7 @@ public enum Command {
         @Override
         public void commandMethod(MatchResult matcher, ConnectSix connectSix) {
 
-            connectSix.prepareTextOutput(connectSix.printBoard());
+            connectSix.output(connectSix.printBoard());
         }
     },
 
@@ -95,7 +97,7 @@ public enum Command {
 
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
-            connectSix.prepareTextOutput(connectSix.stateBoard(row, column));
+            connectSix.output(connectSix.stateBoard(row, column));
         }
     },
 
@@ -108,7 +110,7 @@ public enum Command {
         @Override
         public void commandMethod(MatchResult matcher, ConnectSix connectSix) {
 
-            connectSix.prepareTextOutput(connectSix.resetGame());
+            connectSix.output(connectSix.resetGame());
         }
     },
 

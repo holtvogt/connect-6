@@ -1,9 +1,11 @@
 package edu.kit.informatik.game;
 
-import edu.kit.informatik.InvalidInputException;
 import java.util.Arrays;
 
+import edu.kit.informatik.exceptions.InvalidInputException;
+
 /**
+ * This class implements the given board types.
  * 
  * @author Björn Holtvogt
  *
