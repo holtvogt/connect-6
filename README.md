@@ -11,12 +11,12 @@ To start the game, one will need three important command line arguments. As afor
 ### Initialization
 Standard game board:
 `
-java Main standard 20 2
+java edu.kit.informatik.Main standard 20 2
 `
 
 Torus game board:
 `
-java Main torus 20 2
+java edu.kit.informatik.Main torus 20 2
 `
 
 ## Commands
