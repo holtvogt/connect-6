@@ -29,3 +29,6 @@ hs_err_pid*
 .settings
 /target/
 bin/
+
+# Visual Studio Code
+.vscode/
