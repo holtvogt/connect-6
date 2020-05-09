@@ -1,5 +1,5 @@
 # Connect 6
-The game was developed as a result of my programming exam at the end of the semester. On the one hand, one can play the classic board game as introduced in 2005 at the conference *Advances in Computer Games*. On the other hand, a *torus* variant of the game has been implemented, which allows results beyond the game board ends.
+The game was developed as a result of my programming exam at the end of my first semester. On the one hand, one can play the classic board game as introduced in 2005 at the conference *Advances in Computer Games*. On the other hand, a *torus* variant of the game has been implemented, which allows results beyond the game board ends.
 
 ## Playmaking and Rules
 The game is for two to four players who compete against each other. The players place in each valid turn two of their tokens marked *P1*, *P2*, *P3* and *P4* on the quadratic *N x N* board. On each free field only one token is allowed. The amount of tokens for the players are not limited. The first player, who has placed at least six of his tokens in a continuously horizontal, vertical or diagonal direction, wins the game.
