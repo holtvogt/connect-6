@@ -30,5 +30,11 @@ hs_err_pid*
 /target/
 bin/
 
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
 # Visual Studio Code
 .vscode/
