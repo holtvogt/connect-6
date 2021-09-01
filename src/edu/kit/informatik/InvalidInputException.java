@@ -1,4 +1,4 @@
-package edu.kit.informatik.exceptions;
+package edu.kit.informatik;
 
 /**
  * This exception is to be thrown when the user enters invalid input to the
