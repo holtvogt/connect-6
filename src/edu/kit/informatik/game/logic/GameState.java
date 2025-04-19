@@ -1,4 +1,4 @@
-package edu.kit.informatik.game;
+package edu.kit.informatik.game.logic;
 
 /**
  * This class implements the current game state.

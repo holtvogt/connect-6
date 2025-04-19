@@ -1,6 +1,8 @@
-package edu.kit.informatik.game;
+package edu.kit.informatik.game.logic;
 
 import edu.kit.informatik.InvalidInputException;
+import edu.kit.informatik.game.Board;
+import edu.kit.informatik.game.Player;
 
 /**
  * This class processes all game interactions from user(s) and responds via command line.

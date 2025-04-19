@@ -3,7 +3,7 @@ package edu.kit.informatik.command;
 import java.util.regex.Matcher;
 
 import edu.kit.informatik.InvalidInputException;
-import edu.kit.informatik.game.ConnectSix;
+import edu.kit.informatik.game.logic.ConnectSix;
 
 /**
  * The {@code CommandExecutor} class is responsible for executing a parsed {@link Command}.

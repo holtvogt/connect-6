@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import edu.kit.informatik.command.Command;
 import edu.kit.informatik.command.CommandExecutor;
 import edu.kit.informatik.command.CommandParser;
-import edu.kit.informatik.game.ConnectSix;
+import edu.kit.informatik.game.logic.ConnectSix;
 
 /**
  * The main class is the entry point of the connect 6 game application.

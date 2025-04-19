@@ -4,8 +4,8 @@ import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 
 import edu.kit.informatik.InvalidInputException;
-import edu.kit.informatik.game.ConnectSix;
-import edu.kit.informatik.game.GameState;
+import edu.kit.informatik.game.logic.ConnectSix;
+import edu.kit.informatik.game.logic.GameState;
 
 /**
  * This class implements all necessary commands for game usage.
