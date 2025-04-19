@@ -1,10 +1,13 @@
 package edu.kit.informatik;
 
-import edu.kit.informatik.game.ConnectSix;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import edu.kit.informatik.command.Command;
+import edu.kit.informatik.command.CommandExecutor;
+import edu.kit.informatik.command.CommandParser;
+import edu.kit.informatik.game.ConnectSix;
 
 /**
  * The main class is the entry point of the connect 6 game application.
@@ -33,19 +36,21 @@ public final class Main {
      */
     public static void main(final String[] args) {
         ConnectSix connectSix = new ConnectSix();
-        Command command = null;
+
         if (connectSix.entryCheck(args)) {
-            do {
+            while (Command.isRunning()) {
                 try {
-                    command = Command.matchingCommand(IN.readLine(), connectSix);
+                    String userInput = IN.readLine();
+                    Command command = CommandParser.parse(userInput);
+                    CommandExecutor.execute(command, userInput, connectSix);
                 } catch (InvalidInputException invalidInputException) {
                     System.out.println("Error, " + invalidInputException.getMessage());
                 } catch (NumberFormatException numberFormatException) {
                     System.out.println("Error, input isn't equal to an integer.");
                 } catch (IOException ioException) {
-                    throw new RuntimeException(ioException);
+                    System.err.println("Error reading input: " + ioException.getMessage());
                 }
-            } while (command == null || command.isRunning());
+            }
         }
     }
 }
