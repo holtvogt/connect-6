@@ -1,29 +1,49 @@
 package edu.kit.informatik.game.logic;
 
+import java.util.Objects;
+
 import edu.kit.informatik.InvalidInputException;
-import edu.kit.informatik.game.Board;
 import edu.kit.informatik.game.Player;
+import edu.kit.informatik.game.board.Board;
 
 /**
- * This class processes all game interactions from user(s) and responds via command line.
+ * Manages the core logic and state of a Connect Six game.
+ * <p>
+ * Connect Six is a strategy board game where players take turns placing two tokens
+ * on a board, aiming to connect six tokens in a row, column, or diagonal. This class
+ * handles the game board, players, and game state, and provides methods for interacting
+ * with the game.
+ * </p>
+ * 
+ * <p>
+ * The {@code ConnectSix} class works with a {@link Board} to manage the game board
+ * and uses {@link Player} and {@link GameState} to track the current player and
+ * the overall game state.
+ * </p>
  */
 public class ConnectSix {
-
-    private static final int MIN_EDGE_LENGTH = 17;
-    private static final int MAX_EDGE_LENGTH = 21;
-    private static final int MIN_AMOUNT_OF_PLAYERS = 2;
-
     private Board board;
+    private int boardSize;
+    private int playerAmount;
+
     private Player currentPlayer;
     private GameState currentGameState;
-    private int boardLength;
-    private int playerAmount;
     private int gameCounter;
 
     /**
-     * Creates the game control.
+     * Initializes a new Connect Six game.
+     *
+     * @param board The game board to use (e.g., standard or torus board).
+     * @param boardSize The size of the board (must be a valid size).
+     * @param playerAmount The number of players participating in the game.
+     * @throws IllegalArgumentException If the board, board size, or player amount is invalid.
      */
-    public ConnectSix() {
+    public ConnectSix(Board board, int boardSize, int playerAmount) {
+        this.board = Objects.requireNonNull(board);
+        this.boardSize = boardSize;
+        this.playerAmount = playerAmount;
+
+        this.board.initialize(boardSize);
         setCurrentPlayer(Player.P1);
         setCurrentGameState(GameState.RUNNING);
         setGameCounter(0);
@@ -59,7 +79,7 @@ public class ConnectSix {
      *
      * @return The current game state.
      */
-    public GameState getCurrentGamestate() {
+    public GameState getCurrentGameState() {
         return currentGameState;
     }
 
@@ -91,118 +111,64 @@ public class ConnectSix {
     }
 
     /**
-     * Checks command line input for correctness.
+     * Places two tokens on the board for the current player.
      *
-     * @param commandLineInput Array of strings which contains the game mode
-     *                         specification.
-     * @return True, if the command line input contains exactly three main
-     * characteristics: Game mode, which can be "standard" or "torus". Field
-     * size factor, which has a given minimum and maximum length and also
-     * has to be an even number. Number of players, who are a minimum of two
-     * and a maximum of four. False, if not.
+     * @param firstRow The row index of the first token.
+     * @param firstColumn The column index of the first token.
+     * @param secondRow The row index of the second token.
+     * @param secondColumn The column index of the second token.
+     * @return "OK" if the placement is valid, or an error message if the placement is invalid.
+     * @throws InvalidInputException If the placement violates game rules (e.g., out of bounds, overlapping tokens).
      */
-    public boolean entryCheck(final String[] commandLineInput) {
-        try {
-            if (commandLineInput.length == 3
-                    && (commandLineInput[0].equals("standard") || commandLineInput[0].equals("torus"))
-                    && Integer.parseInt(commandLineInput[1]) > MIN_EDGE_LENGTH
-                    && Integer.parseInt(commandLineInput[1]) < MAX_EDGE_LENGTH
-                    && Integer.parseInt(commandLineInput[1]) % 2 == 0
-                    && Integer.parseInt(commandLineInput[2]) >= MIN_AMOUNT_OF_PLAYERS
-                    && Integer.parseInt(commandLineInput[2]) <= currentPlayer.getMaxAmountOfPlayers()) {
-
-                String gameType = commandLineInput[0];
-                board = gameType.equals("standard") ? Board.STANDARD : Board.TORUS;
-                boardLength = Integer.parseInt(commandLineInput[1]);
-                playerAmount = Integer.parseInt(commandLineInput[2]);
-                // Empty board is creatable, if every input was correct
-                createBoard();
-            } else {
-                System.out.println("Error, invalid amount of command line arguments or unknown game mode entered.");
-            }
-        } catch (NumberFormatException numberFormatException) {
-            System.out.println("Error, invalid command line arguments.");
-        }
-        return true;
+    public String placeToken(final int firstRow, final int firstColumn, final int secondRow, final int secondColumn)
+            throws InvalidInputException {
+        return board.place(firstRow, firstColumn, secondRow, secondColumn, this);
     }
 
     /**
-     * Returns "OK" as an answer of the method's execution and sets token based on
-     * the current game mode.
+     * Retrieves a row or column from the board and formats it as a string.
      *
-     * @param firstRow     Row position of the first token.
-     * @param firstColumn  Column position of the first token.
-     * @param secondRow    Row position of the second token.
-     * @param secondColumn Column position of the second token.
-     * @param game         Reference to game control.
-     * @return "OK", if first- and second token positions are okay.
-     * @throws InvalidInputException if anything of the token positions are invalid.
-     */
-    public String placeToken(final int firstRow, final int firstColumn, final int secondRow, final int secondColumn,
-                             final ConnectSix game) throws InvalidInputException {
-
-        if (board == Board.STANDARD) {
-            return Board.STANDARD.place(firstRow, firstColumn, secondRow, secondColumn, game);
-        } else {
-            return Board.TORUS.place(firstRow, firstColumn, secondRow, secondColumn, game);
-        }
-    }
-
-    /**
-     * Returns a row or column as a result of the printRowOrCol - method.
-     *
-     * @param index      Row or column index which wants to be printed.
-     * @param horizontal True, if it's a row. False, if it's a column.
-     * @return The row or column of the game board as a string.
-     * @throws InvalidInputException if index isn't located on the game board.
+     * @param index The index of the row or column to retrieve.
+     * @param horizontal True to retrieve a row; false to retrieve a column.
+     * @return A string representation of the specified row or column.
+     * @throws InvalidInputException If the index is out of bounds.
      */
     public String printBoardLine(final int index, final boolean horizontal) throws InvalidInputException {
-        return Board.STANDARD.printRowOrCol(index, horizontal);
+        return board.printRowOrColumn(index, horizontal);
     }
 
     /**
-     * Returns the game board.
+     * Returns the game board as a string.
      *
-     * @return The game board as string.
+     * @return The game board as a string.
      */
     public String printBoard() {
         return board.getBoard();
     }
 
     /**
-     * Returns the result of the state - method based on the current game mode.
+     * Retrieves the state of a specific cell on the board.
      *
-     * @param row    Row position of the token.
-     * @param column Column position of the token.
-     * @return The occupancy of the chosen game field.
-     * @throws InvalidInputException if the given token position doesn't exist in
-     *                               "standard" game mode.
+     * @param row The row index of the cell.
+     * @param column The column index of the cell.
+     * @return A string representing the state of the cell ("**" for empty or the player's token).
+     * @throws InvalidInputException If the specified cell is out of bounds.
      */
     public String stateBoard(final int row, final int column) throws InvalidInputException {
-        if (board == Board.STANDARD) {
-            return Board.STANDARD.state(row, column);
-        } else {
-            return Board.TORUS.state(row, column);
-        }
+        return board.state(row, column);
     }
 
     /**
-     * Resets the game.
+     * Resets the game to its initial state. The board is cleared, the game counter is reset, 
+     * and the current player is set to Player 1.
      *
-     * @return "OK" as an answer of this methods execution.
+     * @return "OK" to indicate the game has been successfully reset.
      */
     public String resetGame() {
-        createBoard();
+        board.initialize(boardSize);
         setGameCounter(0);
         setCurrentPlayer(Player.P1);
         setCurrentGameState(GameState.RUNNING);
         return "OK";
-    }
-
-    /**
-     * Creates a new and empty game board.
-     */
-    private void createBoard() {
-        board.setBoard(boardLength);
     }
 }
