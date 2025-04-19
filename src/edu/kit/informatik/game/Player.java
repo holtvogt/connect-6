@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class represents the players in the game.
+ * This enum represents the players in the Connect Six game.
+ * Each player is identified by a unique player ID.
  */
 public enum Player {
-
     /**
      * Player 1.
      */
@@ -31,19 +31,19 @@ public enum Player {
     private static final Map<Integer, Player> PLAYER_MAP = new HashMap<>();
     private final int playerID;
 
+    static {
+        for (Player player : Player.values()) {
+            PLAYER_MAP.put(player.playerID, player);
+        }
+    }
+
     /**
-     * Creates a player with his player ID.
+     * Creates a player with the specified player ID.
      *
-     * @param playerID Player ID.
+     * @param playerID The unique ID of the player.
      */
     Player(final int playerID) {
         this.playerID = playerID;
-    }
-
-    static {
-        for (Player player : Player.values()) {
-            PLAYER_MAP.put(player.getPlayerID(), player);
-        }
     }
 
     /**
@@ -51,40 +51,40 @@ public enum Player {
      *
      * @return The player ID.
      */
-    private int getPlayerID() {
+    public int getPlayerID() {
         return playerID;
     }
 
     /**
-     * Returns the player by his player ID.
+     * Returns the player by their player ID.
      *
-     * @param id Player ID.
-     * @return The Player.
+     * @param id The player ID.
+     * @return The {@link Player} corresponding to the given ID, or {@code null} if no such player exists.
      */
-    private Player getPlayerByID(final int id) {
+    public static Player getPlayerByID(final int id) {
         return PLAYER_MAP.get(id);
     }
 
     /**
-     * Returns the maximum amount of players in this game.
+     * Returns the maximum number of players in the game.
      *
-     * @return The maximum amount of players in this game.
+     * @return The maximum number of players.
      */
-    public int getMaxAmountOfPlayers() {
+    public static int getMaxAmountOfPlayers() {
         return PLAYER_MAP.size();
     }
 
     /**
-     * Returns the next player.
+     * Returns the next player in the sequence.
      *
-     * @param playerAmount The maximum amount of players in this game.
-     * @return The next player.
+     * @param playerAmount The total number of players in the game.
+     * @return The next {@link Player} in the sequence.
+     * @throws IllegalArgumentException If the playerAmount is invalid.
      */
     public Player getNextPlayer(final int playerAmount) {
-        if (playerAmount != PLAYER_MAP.size()) {
-            return getPlayerByID((playerID + 1) % playerAmount);
-        } else {
-            return getPlayerByID((playerID + 1) % PLAYER_MAP.size());
+        if (playerAmount <= 0 || playerAmount > PLAYER_MAP.size()) {
+            throw new IllegalArgumentException("Invalid player amount: " + playerAmount);
         }
+        return getPlayerByID((playerID + 1) % playerAmount);
     }
 }
