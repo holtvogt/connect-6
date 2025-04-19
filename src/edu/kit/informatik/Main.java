@@ -8,9 +8,10 @@ import edu.kit.informatik.command.Command;
 import edu.kit.informatik.command.CommandExecutor;
 import edu.kit.informatik.command.CommandParser;
 import edu.kit.informatik.game.logic.ConnectSix;
+import edu.kit.informatik.game.logic.GameInitializer;
 
 /**
- * The main class is the entry point of the connect 6 game application.
+ * The main class is the entry point of the Connect Six game.
  */
 public final class Main {
 
@@ -33,23 +34,23 @@ public final class Main {
      * This is the program entry method main.
      *
      * @param args Array of strings of the given command line arguments.
+     * @throws InvalidInputException If the input is invalid.
+     * @throws NumberFormatException If the input is not a valid integer.
      */
-    public static void main(final String[] args) {
-        ConnectSix connectSix = new ConnectSix();
+    public static void main(final String[] args) throws InvalidInputException {
+        ConnectSix connectSix = GameInitializer.initializeGame(args);
 
-        if (connectSix.entryCheck(args)) {
-            while (Command.isRunning()) {
-                try {
-                    String userInput = IN.readLine();
-                    Command command = CommandParser.parse(userInput);
-                    CommandExecutor.execute(command, userInput, connectSix);
-                } catch (InvalidInputException invalidInputException) {
-                    System.out.println("Error, " + invalidInputException.getMessage());
-                } catch (NumberFormatException numberFormatException) {
-                    System.out.println("Error, input isn't equal to an integer.");
-                } catch (IOException ioException) {
-                    System.err.println("Error reading input: " + ioException.getMessage());
-                }
+        while (Command.isRunning()) {
+            try {
+                String userInput = IN.readLine();
+                Command command = CommandParser.parse(userInput);
+                CommandExecutor.execute(command, userInput, connectSix);
+            } catch (InvalidInputException invalidInputException) {
+                System.out.println("Error, " + invalidInputException.getMessage());
+            } catch (NumberFormatException numberFormatException) {
+                System.out.println("Error, input isn't equal to an integer.");
+            } catch (IOException ioException) {
+                System.err.println("Error, " + ioException.getMessage());
             }
         }
     }
