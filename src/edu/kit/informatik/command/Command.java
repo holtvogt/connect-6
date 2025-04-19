@@ -23,14 +23,14 @@ public enum Command {
     PLACE("place (-?\\d+);(-?\\d+);(-?\\d+);(-?\\d+)") {
         @Override
         public void commandMethod(MatchResult matcher, ConnectSix connectSix) throws InvalidInputException {
-            if (connectSix.getCurrentGamestate() == GameState.WON || connectSix.getCurrentGamestate() == GameState.DRAW) {
+            if (connectSix.getCurrentGameState() == GameState.WON || connectSix.getCurrentGameState() == GameState.DRAW) {
                 throw new InvalidInputException("game is over.");
             }
             int firstRow = Integer.parseInt(matcher.group(1));
             int firstColumn = Integer.parseInt(matcher.group(2));
             int secondRow = Integer.parseInt(matcher.group(3));
             int secondColumn = Integer.parseInt(matcher.group(4));
-            System.out.println(connectSix.placeToken(firstRow, firstColumn, secondRow, secondColumn, connectSix));
+            System.out.println(connectSix.placeToken(firstRow, firstColumn, secondRow, secondColumn));
         }
     },
 
