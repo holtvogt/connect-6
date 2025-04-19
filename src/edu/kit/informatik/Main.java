@@ -31,9 +31,22 @@ public final class Main {
     }
 
     /**
-     * This is the program entry method main.
-     *
-     * @param args Array of strings of the given command line arguments.
+     * The entry point for the Connect Six game.
+     * <p>
+     * This class initializes the game using command-line arguments and processes user commands
+     * in a loop until the game ends.
+     * </p>
+     * 
+     * <h3>Command-Line Arguments:</h3>
+     * <ul>
+     *   <li><b>Game Mode:</b> "standard" or "torus".</li>
+     *   <li><b>Board Size:</b> An even number between 17 and 21.</li>
+     *   <li><b>Player Count:</b> An integer between 2 and the maximum supported players.</li>
+     * </ul>
+     * 
+     * <p>Example: {@code java edu.kit.informatik.Main standard 20 2}</p>
+     * 
+     * @param args The command line arguments.
      * @throws InvalidInputException If the input is invalid.
      * @throws NumberFormatException If the input is not a valid integer.
      */
